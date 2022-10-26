@@ -1,0 +1,6 @@
+rootProject.name = 'MicroServicesExp'
+include 'auth-service'
+include 'auth-service'
+include 'config-server'
+include 'user-service'
+

@@ -3,4 +3,5 @@ include 'auth-service'
 include 'auth-service'
 include 'config-server'
 include 'user-service'
+include 'api-gateway-service'
 

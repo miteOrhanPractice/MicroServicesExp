@@ -20,6 +20,7 @@ public enum ErrorType {
     KULLANICI_BULUNAMADI(201,"Güncelleme yapılacak kullanıcı kayıtlı değil.", INTERNAL_SERVER_ERROR);
 
 
+
     private int code;
     private String message;
     HttpStatus httpStatus;

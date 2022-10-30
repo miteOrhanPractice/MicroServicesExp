@@ -1,6 +1,7 @@
 package com.bilgeadam.controller;
 
 import com.bilgeadam.dto.request.UserProfileSaveRequestDto;
+import com.bilgeadam.dto.request.UserProfileUpdateRequestDto;
 import com.bilgeadam.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,5 +19,10 @@ public class UserProfileController {
     @PostMapping("/save")
     public ResponseEntity<Boolean> save(@RequestBody UserProfileSaveRequestDto dto){
         return ResponseEntity.ok(userProfileService.save(dto));
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<Boolean> update(UserProfileUpdateRequestDto dto){
+        return ResponseEntity.ok(userProfileService.update(dto));
     }
 }

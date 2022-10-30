@@ -1,5 +1,9 @@
 package com.bilgeadam.service;
 
+import com.bilgeadam.dto.request.LoginRequestDto;
+import com.bilgeadam.exception.AuthServiceException;
+import com.bilgeadam.exception.ErrorType;
+import com.bilgeadam.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
 
 import com.bilgeadam.dto.request.RegisterRequestDto;
@@ -21,14 +25,16 @@ import java.util.Optional;
 @Service
 public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository repository;
+    private final JwtTokenManager tokenManager;
 
     private final UserProfileManager userProfileManager;
 
 
-    public  AuthService(IAuthRepository repository,UserProfileManager userProfileManager){
+    public  AuthService(IAuthRepository repository,UserProfileManager userProfileManager,JwtTokenManager tokenManager){
         super(repository);
         this.repository=repository;
         this.userProfileManager=userProfileManager;
+        this.tokenManager=tokenManager;
 
     }
 
@@ -46,6 +52,13 @@ public class AuthService extends ServiceManager<Auth,Long> {
                     .username(dto.getUsername()).build());
         }
         return false;
+    }
+
+    public String doLogin(LoginRequestDto dto){
+        Optional<Auth> auth = repository.findOptionalByUsernameAndPassword(
+                dto.getUsername(),dto.getPassword());
+        if(auth.isEmpty()) throw new AuthServiceException(ErrorType.LOGIN_ERROR_001);
+        return tokenManager.createToken(auth.get().getId());
     }
 
 
